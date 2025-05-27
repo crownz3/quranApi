@@ -47,7 +47,7 @@ async function getAccessToken() {
     console.error('❌ Error getting access token:', error?.response?.data || error.message);
     return null;
   }
-
+}
 
 app.get('/api/wordbyword/:surah/:ayah', async (req, res) => {
   try {
