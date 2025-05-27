@@ -1,14 +1,14 @@
-const express = require('express');
-const axios = require('axios');
-const cors = require('cors');
-const qs = require('querystring');
+import express from 'express';
+import axios from 'axios';
+import cors from 'cors';
+import qs from 'querystring';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-const CLIENT_ID = 'd945e9a9-7a10-443a-942b-946d8b6654c0';
-const CLIENT_SECRET = 'LZMB~X6gRqYd-KcCybN0FNcP13';
+const CLIENT_ID = 'your-client-id';
+const CLIENT_SECRET = 'your-secret';
 
 let tokenCache = null;
 
@@ -52,5 +52,5 @@ app.get('/api/wordbyword/:surah/:ayah', async (req, res) => {
   }
 });
 
-const PORT = 3000;
-app.listen(PORT, () => console.log(`🔰 Backend server running at http://localhost:${PORT}`));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`🔰 Server running on port ${PORT}`));
