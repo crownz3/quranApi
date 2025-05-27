@@ -50,18 +50,14 @@ async function getAccessToken() {
 
 app.get('/api/wordbyword/:token/:surah/:ayah', async (req, res) => {
   try {
-    const { token, surah, ayah } = req.params; // ✅ FIXED: add token here
-  console.log(token)
-  console.log(surah)
-  console.log(ayah)
-    
+    const { token, surah, ayah } = req.params;
     const verseKey = `${surah}:${ayah}`;
 
     const response = await axios.get(
       `https://apis.quran.foundation/content/api/v4/verses/by_key/${verseKey}?language=en&words=true`,
       {
         headers: {
-          Authorization: `Bearer ${token}` // ✅ token will now be defined
+          Authorization: `Bearer ${token.trim()}`
         }
       }
     );
@@ -70,10 +66,12 @@ app.get('/api/wordbyword/:token/:surah/:ayah', async (req, res) => {
   } catch (error) {
     console.error('❌ Proxy error:', error?.response?.data || error.message);
     res.status(error?.response?.status || 500).json({
-      error: 'Failed to fetch word-by-word data'
+      error: 'Failed to fetch word-by-word data',
+      details: error?.response?.data || error.message
     });
   }
 });
+
 
 
 
