@@ -7,10 +7,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// const CLIENT_ID = 'd945e9a9-7a10-443a-942b-946d8b6654c0';
-// const CLIENT_SECRET = 'LZMB~X6gRqYd-KcCybN0FNcP13';
-const CLIENT_ID = '9d502b37-34d7-4dc5-9730-4e7ecd0438c7';
-const CLIENT_SECRET = 'IdZyCNG~D2~Y-C.0FKBOlwez9h';
+const CLIENT_ID = 'd945e9a9-7a10-443a-942b-946d8b6654c0';
+const CLIENT_SECRET = 'LZMB~X6gRqYd-KcCybN0FNcP13';
+// const CLIENT_ID = '9d502b37-34d7-4dc5-9730-4e7ecd0438c7';
+// const CLIENT_SECRET = 'IdZyCNG~D2~Y-C.0FKBOlwez9h';
 
 let tokenCache = null;
 
@@ -54,10 +54,11 @@ app.get('/api/wordbyword/:token/:surah/:ayah', async (req, res) => {
     const verseKey = `${surah}:${ayah}`;
 
     const response = await axios.get(
-      `https://apis.quran.foundation/content/api/v4/verses/by_key/${verseKey}?language=en&words=true`,
+      `https://apis-prelive.quran.foundation/content/api/v4/verses/by_key/${verseKey}?language=en&words=true`,
       {
         headers: {
-          Authorization: `Bearer ${token.trim()}`
+          'x-auth-token': token.trim(),
+          'x-client-id': CLIENT_ID
         }
       }
     );
