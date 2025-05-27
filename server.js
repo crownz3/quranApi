@@ -33,7 +33,8 @@ async function getAccessToken() {
   try {
     const response = await axios({
       method: 'post',
-      url: 'https://oauth2.quran.foundation/oauth2/token',
+      // url: 'https://oauth2.quran.foundation/oauth2/token',
+      url: 'https://prelive-oauth2.quran.foundation/oauth2/token',
       headers: {
         'Authorization': `Basic ${auth}`,
         'Content-Type': 'application/x-www-form-urlencoded'
