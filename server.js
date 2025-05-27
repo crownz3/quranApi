@@ -11,28 +11,31 @@ const CLIENT_ID = '9d502b37-34d7-4dc5-9730-4e7ecd0438c7';
 const CLIENT_SECRET = 'IdZyCNG~D2~Y-C.0FKBOlwez9h';
 
 let tokenCache = null;
+app.get('/api/myAuth', async (req, res) => {
+  res.status(200).send(getAccessToken());
+})
 
 async function getAccessToken() {
-  if (tokenCache?.expires > Date.now()) return tokenCache.token;
+  const clientId = '9d502b37-34d7-4dc5-9730-4e7ecd0438c7';
+  const clientSecret = 'IdZyCNG~D2~Y-C.0FKBOlwez9h';
 
-  const res = await axios.post(
-    'https://oauth2.quran.foundation/oauth2/token',
-    qs.stringify({
-      grant_type: 'client_credentials',
-      client_id: CLIENT_ID,
-      client_secret: CLIENT_SECRET
-    }),
-    {
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-    }
-  );
+  const auth = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
 
-  tokenCache = {
-    token: res.data.access_token,
-    expires: Date.now() + res.data.expires_in * 1000
-  };
+  try {
+    const response = await axios({
+      method: 'post',
+      url: 'https://prelive-oauth2.quran.foundation/oauth2/token',
+      headers: {
+        'Authorization': `Basic ${auth}`,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      data: 'grant_type=client_credentials&scope=content'
+    });
 
-  return tokenCache.token;
+    return response.data.access_token;
+  } catch (error) {
+    console.error('Error getting access token:', error);
+  }
 }
 
 app.get('/api/wordbyword/:surah/:ayah', async (req, res) => {
