@@ -16,8 +16,8 @@ app.get('/api/myAuth', async (req, res) => {
 })
 
 async function getAccessToken() {
-  const clientId = '9d502b37-34d7-4dc5-9730-4e7ecd0438c7';
-  const clientSecret = 'IdZyCNG~D2~Y-C.0FKBOlwez9h';
+  const clientId = 'd945e9a9-7a10-443a-942b-946d8b6654c0';
+  const clientSecret = 'LZMB~X6gRqYd-KcCybN0FNcP13';
 
   const auth = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
 
