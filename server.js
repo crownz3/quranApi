@@ -49,9 +49,12 @@ async function getAccessToken() {
 }
 
 app.get('/api/wordbyword/:token/:surah/:ayah', async (req, res) => {
-  console.log(token)
   try {
     const { token, surah, ayah } = req.params; // ✅ FIXED: add token here
+  console.log(token)
+  console.log(surah)
+  console.log(ayah)
+    
     const verseKey = `${surah}:${ayah}`;
 
     const response = await axios.get(
