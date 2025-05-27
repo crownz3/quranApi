@@ -16,7 +16,7 @@ async function getAccessToken() {
   if (tokenCache?.expires > Date.now()) return tokenCache.token;
 
   const res = await axios.post(
-    'https://prelive-oauth2.quran.foundation/oauth2/token',
+    'https://oauth2.quran.foundation/oauth2/token',
     qs.stringify({
       grant_type: 'client_credentials',
       client_id: CLIENT_ID,
