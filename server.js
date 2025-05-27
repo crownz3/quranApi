@@ -7,6 +7,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// const CLIENT_ID = 'd945e9a9-7a10-443a-942b-946d8b6654c0';
+// const CLIENT_SECRET = 'LZMB~X6gRqYd-KcCybN0FNcP13';
 const CLIENT_ID = '9d502b37-34d7-4dc5-9730-4e7ecd0438c7';
 const CLIENT_SECRET = 'IdZyCNG~D2~Y-C.0FKBOlwez9h';
 
@@ -26,15 +28,12 @@ app.get('/api/myAuth', async (req, res) => {
 });
 
 async function getAccessToken() {
-  const clientId = 'd945e9a9-7a10-443a-942b-946d8b6654c0';
-  const clientSecret = 'LZMB~X6gRqYd-KcCybN0FNcP13';
-
-  const auth = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
+  const auth = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64');
 
   try {
     const response = await axios({
       method: 'post',
-      url: 'https://prelive-oauth2.quran.foundation/oauth2/token',
+      url: 'https://oauth2.quran.foundation/oauth2/token',
       headers: {
         'Authorization': `Basic ${auth}`,
         'Content-Type': 'application/x-www-form-urlencoded'
