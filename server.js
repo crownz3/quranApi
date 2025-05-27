@@ -49,6 +49,7 @@ async function getAccessToken() {
 }
 
 app.get('/api/wordbyword/:token/:surah/:ayah', async (req, res) => {
+  console.log(token)
   try {
     const { token, surah, ayah } = req.params; // ✅ FIXED: add token here
     const verseKey = `${surah}:${ayah}`;
