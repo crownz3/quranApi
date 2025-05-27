@@ -7,8 +7,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const CLIENT_ID = 'your-client-id';
-const CLIENT_SECRET = 'your-secret';
+const CLIENT_ID = 'd945e9a9-7a10-443a-942b-946d8b6654c0';
+const CLIENT_SECRET = 'LZMB~X6gRqYd-KcCybN0FNcP13';
 
 let tokenCache = null;
 
