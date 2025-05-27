@@ -50,14 +50,14 @@ async function getAccessToken() {
 
 app.get('/api/wordbyword/:token/:surah/:ayah', async (req, res) => {
   try {
-    const { surah, ayah } = req.params;
+    const { token, surah, ayah } = req.params; // ✅ FIXED: add token here
     const verseKey = `${surah}:${ayah}`;
 
     const response = await axios.get(
       `https://apis.quran.foundation/content/api/v4/verses/by_key/${verseKey}?language=en&words=true`,
       {
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}` // ✅ token will now be defined
         }
       }
     );
@@ -70,6 +70,7 @@ app.get('/api/wordbyword/:token/:surah/:ayah', async (req, res) => {
     });
   }
 });
+
 
 
 const PORT = process.env.PORT || 3000;
