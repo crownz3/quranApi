@@ -48,22 +48,29 @@ async function getAccessToken() {
   }
 }
 
-app.get('/api/wordbyword/:surah/:ayah', async (req, res) => {
+app.get('/api/wordbyword/:token/:surah/:ayah', async (req, res) => {
   try {
-    const token = await getAccessToken();
     const { surah, ayah } = req.params;
-    const apiUrl = `https://apis-prelive.quran.foundation/content/api/v4/verses/by_key/${surah}:${ayah}?language=en&words=true`;
+    const verseKey = `${surah}:${ayah}`;
 
-    const quranRes = await axios.get(apiUrl, {
-      headers: { Authorization: `Bearer ${token}` }
+    const response = await axios.get(
+      `https://apis.quran.foundation/content/api/v4/verses/by_key/${verseKey}?language=en&words=true`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+    res.json(response.data);
+  } catch (error) {
+    console.error('❌ Proxy error:', error?.response?.data || error.message);
+    res.status(error?.response?.status || 500).json({
+      error: 'Failed to fetch word-by-word data'
     });
-
-    res.json(quranRes.data);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Failed to fetch data');
   }
 });
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`🔰 Server running on port ${PORT}`));
