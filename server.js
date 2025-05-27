@@ -11,9 +11,19 @@ const CLIENT_ID = '9d502b37-34d7-4dc5-9730-4e7ecd0438c7';
 const CLIENT_SECRET = 'IdZyCNG~D2~Y-C.0FKBOlwez9h';
 
 let tokenCache = null;
+
 app.get('/api/myAuth', async (req, res) => {
-  res.status(200).send(getAccessToken());
-})
+  try {
+    const token = await getAccessToken(); // ✅ Await the async function
+    if (token) {
+      res.status(200).json({ access_token: token });
+    } else {
+      res.status(500).json({ error: 'Failed to get token' });
+    }
+  } catch (err) {
+    res.status(500).json({ error: 'Server error', details: err.message });
+  }
+});
 
 async function getAccessToken() {
   const clientId = 'd945e9a9-7a10-443a-942b-946d8b6654c0';
@@ -34,9 +44,10 @@ async function getAccessToken() {
 
     return response.data.access_token;
   } catch (error) {
-    console.error('Error getting access token:', error);
+    console.error('❌ Error getting access token:', error?.response?.data || error.message);
+    return null;
   }
-}
+
 
 app.get('/api/wordbyword/:surah/:ayah', async (req, res) => {
   try {
