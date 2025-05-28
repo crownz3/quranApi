@@ -49,14 +49,18 @@ async function getAccessToken() {
   }
 }
 
-app.get('/api/wordbyword/:token/:surah/:ayah', async (req, res) => {
+app.get('/api/wordbyword/:token/:surah/:ayah/:lang', async (req, res) => {
   try {
     const { token, surah, ayah } = req.params;
     const verseKey = `${surah}:${ayah}`;
 
     const response = await axios.get(
       // `https://apis-prelive.quran.foundation/content/api/v4/verses/by_key/${verseKey}?language=ta&words=true&translations=158`,
-      `https://apis.quran.foundation/content/api/qdc/verses/by_key/${verseKey}?words=true&translations=133&word_translation_language=ta&fields=text_uthmani&word_fields=verse_key,text_uthmani&translation_fields=resource_name,language_id&mushaf=2`,
+      if(lang === 'en'){
+        'https://apis.quran.foundation/content/api/qdc/resources/word_by_word_translations?language=en'
+      }else{
+        `https://apis.quran.foundation/content/api/qdc/verses/by_key/${verseKey}?words=true&translations=133&word_translation_language=ta&fields=text_uthmani&word_fields=verse_key,text_uthmani&translation_fields=resource_name,language_id&mushaf=2`,
+      }
       {
         headers: {
           'x-auth-token': token.trim(),
