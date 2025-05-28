@@ -54,13 +54,22 @@ app.get('/api/wordbyword/:token/:surah/:ayah/:lang', async (req, res) => {
     const { token, surah, ayah } = req.params;
     const verseKey = `${surah}:${ayah}`;
 
-    const response = await axios.get(
-      // `https://apis-prelive.quran.foundation/content/api/v4/verses/by_key/${verseKey}?language=ta&words=true&translations=158`,
-      if(lang === 'en'){
-        'https://apis.quran.foundation/content/api/qdc/resources/word_by_word_translations?language=en'
-      }else{
-        `https://apis.quran.foundation/content/api/qdc/verses/by_key/${verseKey}?words=true&translations=133&word_translation_language=ta&fields=text_uthmani&word_fields=verse_key,text_uthmani&translation_fields=resource_name,language_id&mushaf=2`,
+          let url;
+      
+      if (lang === 'en') {
+        url = `https://apis.quran.foundation/content/api/qdc/verses/by_key/${verseKey}?words=true&translations=85&word_translation_language=en`;
+      } else {
+        url = `https://apis.quran.foundation/content/api/qdc/verses/by_key/${verseKey}?words=true&translations=133&word_translation_language=${lang}`;
       }
+      
+      const response = await axios.get(url, {
+        headers: {
+          'x-auth-token': token.trim(),
+          'x-client-id': CLIENT_ID
+        }
+      });
+
+    const response = await axios.get(url,
       {
         headers: {
           'x-auth-token': token.trim(),
