@@ -59,7 +59,7 @@ app.get('/api/wordbyword/:token/:surah/:ayah/:lang', async (req, res) => {
     if (lang === 'en') {
       url = `https://apis.quran.foundation/content/api/qdc/verses/by_key/${verseKey}?words=true&translations=85&word_translation_language=en`;
     } else {
-      url = `https://apis.quran.foundation/content/api/qdc/verses/by_key/${verseKey}?words=true&translations=133&word_translation_language=${lang}`;
+      url = `https://apis.quran.foundation/content/api/qdc/verses/by_key/${verseKey}?words=true&translations=133&word_translation_language=ta&fields=text_uthmani&word_fields=verse_key,text_uthmani&translation_fields=resource_name,language_id&mushaf=2,`;
     }
 
     const response = await axios.get(url, {
