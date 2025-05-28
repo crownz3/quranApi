@@ -55,7 +55,8 @@ app.get('/api/wordbyword/:token/:surah/:ayah', async (req, res) => {
     const verseKey = `${surah}:${ayah}`;
 
     const response = await axios.get(
-      `https://apis-prelive.quran.foundation/content/api/v4/verses/by_key/${verseKey}?language=ta&words=true&translations=158`,
+      // `https://apis-prelive.quran.foundation/content/api/v4/verses/by_key/${verseKey}?language=ta&words=true&translations=158`,
+      `https://apis.quran.foundation/content/api/v4/verses/by_key/${verseKey}?language=ta&words=true&translations=158`,
       {
         headers: {
           'x-auth-token': token.trim(),
@@ -79,7 +80,8 @@ app.get('/api/translations/:token', async (req, res) => {
   const { token } = req.params;
 
   try {
-    const response = await axios.get('https://apis-prelive.quran.foundation/content/api/v4/resources/translations?language=ta', {
+    // const response = await axios.get('https://apis-prelive.quran.foundation/content/api/v4/resources/translations?language=ta', {
+    const response = await axios.get('https://apis.quran.foundation/content/api/v4/resources/translations?language=ta', {
       headers: {
         'x-auth-token': token.trim(),
         'x-client-id': CLIENT_ID
