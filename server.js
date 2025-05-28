@@ -51,32 +51,23 @@ async function getAccessToken() {
 
 app.get('/api/wordbyword/:token/:surah/:ayah/:lang', async (req, res) => {
   try {
-    const { token, surah, ayah } = req.params;
+    const { token, surah, ayah, lang } = req.params;
     const verseKey = `${surah}:${ayah}`;
 
-          let url;
-      
-      if (lang === 'en') {
-        url = `https://apis.quran.foundation/content/api/qdc/verses/by_key/${verseKey}?words=true&translations=85&word_translation_language=en`;
-      } else {
-        url = `https://apis.quran.foundation/content/api/qdc/verses/by_key/${verseKey}?words=true&translations=133&word_translation_language=${lang}`;
-      }
-      
-      const response = await axios.get(url, {
-        headers: {
-          'x-auth-token': token.trim(),
-          'x-client-id': CLIENT_ID
-        }
-      });
+    let url;
 
-    const response = await axios.get(url,
-      {
-        headers: {
-          'x-auth-token': token.trim(),
-          'x-client-id': CLIENT_ID
-        }
+    if (lang === 'en') {
+      url = `https://apis.quran.foundation/content/api/qdc/verses/by_key/${verseKey}?words=true&translations=85&word_translation_language=en`;
+    } else {
+      url = `https://apis.quran.foundation/content/api/qdc/verses/by_key/${verseKey}?words=true&translations=133&word_translation_language=${lang}`;
+    }
+
+    const response = await axios.get(url, {
+      headers: {
+        'x-auth-token': token.trim(),
+        'x-client-id': CLIENT_ID
       }
-    );
+    });
 
     res.json(response.data);
   } catch (error) {
@@ -87,7 +78,6 @@ app.get('/api/wordbyword/:token/:surah/:ayah/:lang', async (req, res) => {
     });
   }
 });
-
 
 app.get('/api/translations/:token', async (req, res) => {
   const { token } = req.params;
