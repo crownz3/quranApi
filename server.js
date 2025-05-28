@@ -79,7 +79,7 @@ app.get('/api/translations/:token', async (req, res) => {
   const { token } = req.params;
 
   try {
-    const response = await axios.get('https://apis-prelive.quran.foundation/content/api/v4/resources/translations', {
+    const response = await axios.get('https://apis-prelive.quran.foundation/content/api/v4/resources/translations?language=ta', {
       headers: {
         'x-auth-token': token.trim(),
         'x-client-id': CLIENT_ID
