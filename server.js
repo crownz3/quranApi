@@ -79,6 +79,33 @@ app.get('/api/wordbyword/:token/:surah/:ayah/:lang', async (req, res) => {
   }
 });
 
+app.get('/api/ayahTranslation/:token/:surah/:ayah/:lang', async (req, res) => {
+  try {
+    const { token, surah, ayah, lang } = req.params;
+    const verseKey = `${surah}:${ayah}`;
+
+    // Use appropriate translation ID
+    const translationId = lang === 'en' ? 85 : 133;
+
+    const url = `https://apis.quran.foundation/content/api/qdc/verses/by_key/${verseKey}?translations=${translationId}&translation_fields=resource_name,language_id`;
+
+    const response = await axios.get(url, {
+      headers: {
+        'x-auth-token': token.trim(),
+        'x-client-id': CLIENT_ID
+      }
+    });
+
+    res.json(response.data);
+  } catch (error) {
+    console.error('❌ Error fetching ayah translation:', error?.response?.data || error.message);
+    res.status(error?.response?.status || 500).json({
+      error: 'Failed to fetch ayah translation',
+      details: error?.response?.data || error.message
+    });
+  }
+});
+
 app.get('/api/translations/:token', async (req, res) => {
   const { token } = req.params;
 
