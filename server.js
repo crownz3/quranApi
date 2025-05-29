@@ -87,7 +87,7 @@ app.get('/api/ayahTranslation/:token/:surah/:ayah/:lang', async (req, res) => {
     // Use appropriate translation ID
     const translationId = lang === 'en' ? 85 : 133;
 
-    const url = `https://apis.quran.foundation/content/api/qdc/verses/by_key/${verseKey}?translations=${translationId}&translation_fields=resource_name,language_id`;
+    const url = `https://apis.quran.foundation/content/api/qdc/verses/by_key/${verseKey}?words=true&translations=${translationId}&word_translation_language=${lang}&fields=text_uthmani&word_fields=verse_key,text_uthmani&translation_fields=resource_name,language_id`;
 
     const response = await axios.get(url, {
       headers: {
