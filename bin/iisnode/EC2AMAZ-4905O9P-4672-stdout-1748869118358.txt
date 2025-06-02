@@ -1,0 +1,1 @@
+🔰 Server listening on pipe \\.\pipe\05ddc9c6-358b-4812-883f-24e84d6bb4ac

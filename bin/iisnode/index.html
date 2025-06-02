@@ -1,0 +1,87 @@
+<html>
+<head>
+    <title>iisnode logs</title>
+    <style type="text/css">
+        body
+        {
+            font-family: "Trebuchet MS" , Arial, Helvetica, sans-serif;
+        }
+        table
+        {
+            border-collapse: collapse;
+        }
+        td, th
+        {
+            border: 1px solid lightgray;
+            padding: 3px 7px 2px 7px;
+        }
+        th
+        {
+            text-align: left;
+            padding-top: 5px;
+            padding-bottom: 4px;
+            background-color: Gray;
+            color: #ffffff;
+        }
+        td.stderr
+        {
+            color: Red;
+        }
+    </style>
+</head>
+<body>
+    <table id="logFilesTable">
+        <tr>
+            <th>
+                Computer name
+            </th>
+            <th>
+                PID
+            </th>
+            <th>
+                Type
+            </th>
+            <th>
+                Created
+            </th>
+            <th>
+                Link
+            </th>
+        </tr>
+    </table>
+    <p id="lastUpdated"></p>
+    <script type="text/javascript">
+
+        // this is replaced with actual data at runtime by code in interceptor.js
+        var logFiles = [{"file":"EC2AMAZ-4905O9P-3624-stderr-1748867716658.txt","computername":"EC2AMAZ-4905O9P","pid":3624,"type":"stderr","created":1748867716658},{"file":"EC2AMAZ-4905O9P-3624-stdout-1748867716605.txt","computername":"EC2AMAZ-4905O9P","pid":3624,"type":"stdout","created":1748867716605},{"file":"EC2AMAZ-4905O9P-4024-stderr-1748868554597.txt","computername":"EC2AMAZ-4905O9P","pid":4024,"type":"stderr","created":1748868554597},{"file":"EC2AMAZ-4905O9P-4024-stdout-1748868554540.txt","computername":"EC2AMAZ-4905O9P","pid":4024,"type":"stdout","created":1748868554540},{"file":"EC2AMAZ-4905O9P-4672-stderr-1748869118431.txt","computername":"EC2AMAZ-4905O9P","pid":4672,"type":"stderr","created":1748869118431},{"file":"EC2AMAZ-4905O9P-4672-stdout-1748869118358.txt","computername":"EC2AMAZ-4905O9P","pid":4672,"type":"stdout","created":1748869118358},{"file":"EC2AMAZ-4905O9P-4940-stderr-1748858903011.txt","computername":"EC2AMAZ-4905O9P","pid":4940,"type":"stderr","created":1748858903011},{"file":"EC2AMAZ-4905O9P-5060-stderr-1748863251016.txt","computername":"EC2AMAZ-4905O9P","pid":5060,"type":"stderr","created":1748863251016},{"file":"EC2AMAZ-4905O9P-5060-stdout-1748863250953.txt","computername":"EC2AMAZ-4905O9P","pid":5060,"type":"stdout","created":1748863250953},{"file":"EC2AMAZ-4905O9P-5200-stderr-1748868470786.txt","computername":"EC2AMAZ-4905O9P","pid":5200,"type":"stderr","created":1748868470786},{"file":"EC2AMAZ-4905O9P-5200-stdout-1748868470733.txt","computername":"EC2AMAZ-4905O9P","pid":5200,"type":"stdout","created":1748868470733},{"file":"EC2AMAZ-4905O9P-5436-stderr-1748858930069.txt","computername":"EC2AMAZ-4905O9P","pid":5436,"type":"stderr","created":1748858930069},{"file":"EC2AMAZ-4905O9P-6324-stderr-1748865465425.txt","computername":"EC2AMAZ-4905O9P","pid":6324,"type":"stderr","created":1748865465425},{"file":"EC2AMAZ-4905O9P-6324-stdout-1748865465365.txt","computername":"EC2AMAZ-4905O9P","pid":6324,"type":"stdout","created":1748865465365},{"file":"EC2AMAZ-4905O9P-6368-stderr-1748867859254.txt","computername":"EC2AMAZ-4905O9P","pid":6368,"type":"stderr","created":1748867859254},{"file":"EC2AMAZ-4905O9P-6368-stdout-1748867859206.txt","computername":"EC2AMAZ-4905O9P","pid":6368,"type":"stdout","created":1748867859206},{"file":"EC2AMAZ-4905O9P-6824-stderr-1748858910483.txt","computername":"EC2AMAZ-4905O9P","pid":6824,"type":"stderr","created":1748858910483},{"file":"EC2AMAZ-4905O9P-7196-stderr-1748858976032.txt","computername":"EC2AMAZ-4905O9P","pid":7196,"type":"stderr","created":1748858976032},{"file":"EC2AMAZ-4905O9P-7760-stderr-1748858914208.txt","computername":"EC2AMAZ-4905O9P","pid":7760,"type":"stderr","created":1748858914208},{"file":"EC2AMAZ-4905O9P-7952-stderr-1748859037179.txt","computername":"EC2AMAZ-4905O9P","pid":7952,"type":"stderr","created":1748859037179},{"file":"EC2AMAZ-4905O9P-7952-stdout-1748859037120.txt","computername":"EC2AMAZ-4905O9P","pid":7952,"type":"stdout","created":1748859037120},{"file":"EC2AMAZ-4905O9P-996-stderr-1748858941236.txt","computername":"EC2AMAZ-4905O9P","pid":996,"type":"stderr","created":1748858941236}];
+        var lastUpdated = 1748869120429;
+        var date = new Date();
+
+        date.setTime(lastUpdated);
+        document.getElementById('lastUpdated').innerHTML = 'Index was last updated ' + date;
+
+        logFiles.sort(function (a, b) {
+            return b.created - a.created;
+        });
+
+        var logFilesTable = document.getElementById("logFilesTable");
+        for (var i = 0; i < logFiles.length; i++) {
+            var logFile = logFiles[i];
+            date.setTime(logFile.created);
+            var row = logFilesTable.insertRow(-1);
+            var computerNameCell = row.insertCell(0);
+            var pidCell = row.insertCell(1);
+            var typeCell = row.insertCell(2);
+            var dateCell = row.insertCell(3);
+            var logCell = row.insertCell(4);
+            computerNameCell.innerHTML = logFile.computername;
+            pidCell.innerHTML = logFile.pid.toString();
+            typeCell.innerHTML = logFile.type;
+            typeCell.setAttribute('class', logFile.type);
+            dateCell.innerHTML = date.toString();
+            logCell.innerHTML = '<a href="' + logFile.file + '">log</a>';
+        };
+
+    </script>
+</body>
+</html>
